@@ -1,0 +1,44 @@
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+import java.awt.*;
+import org.lwjgl.opengl.PixelFormat;
+import org.lwjgl.opengl.ContextAttribs;
+import org.lwjgl.opengl.GL11;
+
+class DisplayManager{
+
+    private static final int WIDTH = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
+    private static final int HEIGHT = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
+    private static final int FPS_CAP = 120;
+
+    public DisplayManager(){
+	
+    }
+
+    public static void createDisplay(){
+	ContextAttribs attribs = new ContextAttribs(3,2).withForwardCompatible(true).withProfileCore(true);
+	try{
+	    Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+	    Display.create(new PixelFormat(), attribs);
+	} catch (Exception e){
+	    e.printStackTrace();
+	}
+	GL11.glViewport(0,0,WIDTH,HEIGHT);
+    }
+
+    public static void updateDisplay(){
+	Display.sync(FPS_CAP);
+	Display.update();
+    }
+    
+    public static void closeDisplay(){
+	Display.destroy();
+	//Launcher.showFrame();
+	System.exit(1);
+    }
+    
+    public static void setTitle(int fps){
+	Display.setTitle("FPS: " + Integer.toString(fps));
+    }
+
+}

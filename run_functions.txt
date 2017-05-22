@@ -1,0 +1,5 @@
+Compile:
+javac -cp .:lib/jars/* *.java
+
+Run:
+java -cp .:lib/jars/* -Djava.library.path=lib/natives Launcher
