@@ -38,7 +38,7 @@ class DisplayManager{
     }
     
     public static void setTitle(int fps){
-	Display.setTitle("FPS: " + Integer.toString(fps))
+	Display.setTitle("FPS: " + Integer.toString(fps));
     }
 
 }

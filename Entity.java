@@ -4,7 +4,7 @@ public class Entity{
     
     private TexturedModel model;
     private Vector3f position;
-    private float rotX, rotY, rotZ;
+    public float rotX, rotY, rotZ;
     private float scale;
 
     public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale){
@@ -43,7 +43,7 @@ public class Entity{
     public Vector3f getPosition(){
 	return position;
     }   
-
+    
     public void setRotX(float rotX){
 	this.rotX = rotX;
     }
@@ -76,7 +76,9 @@ public class Entity{
 	return scale;
     }
 
-
+    public Vector3f getRotation(){
+	return new Vector3f(rotX, rotY, rotZ);
+    }
 
 
 
