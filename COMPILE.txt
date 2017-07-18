@@ -1,0 +1,4 @@
+# Comet Colosseum Aliases                                                                                                                                                                                 
+alias compile='c ; javac -cp .:lib/jars/* *.java'
+alias run='c ; java -cp .:lib/jars/* -Djava.library.path=lib/natives Launcher'
+alias go='c ; javac -cp .:lib/jars/* *.java; java -cp .:lib/jars/* -Djava.library.path=lib/natives Launcher'
