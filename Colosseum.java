@@ -9,7 +9,8 @@ import org.lwjgl.opengl.GL11;
 class Colosseum{
 
     public Vector3f playerPosition = new Vector3f(0,0,-35);
-    public Vector3f enemyPosition = new Vector3f(0,0,-70);
+    public Vector3f tempPosition = new Vector3f(8,0,-35);
+    public Vector3f enemyPosition = new Vector3f(0,5,180);
     public Vector3f cubeSatPosition = new Vector3f(0,20,-50);
     public Vector3f playerPosition2 = new Vector3f(0,0,-35);
 
@@ -22,22 +23,22 @@ class Colosseum{
 	RawModel model = OBJLoader.loadObjModel("Human", loader);  
 	//ModelData data = OBJFileLoader.loadOBJ("Human");
 	//RawModel model = loader.loadToVAO(data.getVertices(), data.getTextureCoords(), data.getNormals(), data.getIndices());	
-	ModelTexture texture = new ModelTexture(loader.loadTexture("Solid_Colors/White"));	    
+	ModelTexture texture = new ModelTexture(loader.loadTexture("Solid_Colors/Red"));	    
 	TexturedModel texturedModel = new TexturedModel(model, texture);             
 	texture.setShineDamper(10);
 	texture.setReflectivity(1f);
 
-	RawModel model2 = OBJLoader.loadObjModel("CubeSat", loader);
+	RawModel model2 = OBJLoader.loadObjModel("Scuttler", loader);
 	//ModelData model2 = OBJFileLoader.loadOBJ("Scuttler");	
 	ModelTexture texture2 = new ModelTexture(loader.loadTexture("Solid_Colors/Blue"));
         TexturedModel texturedModel2 = new TexturedModel(model2, texture2);
         texture2.setShineDamper(10);
-        texture2.setReflectivity(1f);
+        texture2.setReflectivity(10f);
 
-        //Player player = new Player(texturedModel, playerPosition, 0, 0, 0, 1);
-        Player player = new Player(texturedModel, playerPosition2, 0, 0, 0, 2.5f);	
-	//Enemy enemy = new Enemy(texturedModel2, enemyPosition, 0, 180f, 0, 3);
-	Enemy enemy = new Enemy(texturedModel2, cubeSatPosition, 0, 300f, 0, 1.5f);
+        Player player = new Player(texturedModel, playerPosition, 0, 0, 0, 1);
+        //Player player = new Player(texturedModel, playerPosition2, 0, 0, 0, 2.5f);	
+	Enemy enemy = new Enemy(texturedModel2, tempPosition, 0, 18f, 0, 3);
+	//Enemy enemy = new Enemy(texturedModel2, cubeSatPosition, 0, 300f, 0, 1.5f);
 	player.setEnemy(enemy);
 	
 	RawModel model3 = OBJLoader.loadObjModel("fern", loader);
@@ -59,6 +60,7 @@ class Colosseum{
 	//}
 
 	Random random = new Random();
+	
 	for (int i = 0; i < 50; i++){
 	    float x = random.nextFloat() * 100 - 50;
 	    float y = random.nextFloat() * 100 - 50;
@@ -91,37 +93,39 @@ class Colosseum{
 	float offset = 0;
 	
 
-	MasterRenderer renderer = new MasterRenderer();
+	MasterRenderer renderer = new MasterRenderer(loader);
 	camera.move();
 
 	boolean up = true;
 
 	while(!Display.isCloseRequested()){
 	    
-	    enemy.increaseRotation(0,DisplayManager.getFrameTimeSeconds() * 10f,0);
-	    if (enemy.getPosition().y > 22) up = false;
-	    else if (enemy.getPosition().y < 18) up = true;
+	    //enemy.increaseRotation(0,DisplayManager.getFrameTimeSeconds() * 10f,0);
+	    //if (enemy.getPosition().y > 22) up = false;
+	    //else if (enemy.getPosition().y < 18) up = true;
 
-	    if (up) enemy.increasePosition(0,1f * DisplayManager.getFrameTimeSeconds(), 0);
-	    else if (!up) enemy.increasePosition(0,-1f * DisplayManager.getFrameTimeSeconds(),0);
+	    //if (up) enemy.increasePosition(0,1f * DisplayManager.getFrameTimeSeconds(), 0);
+	    //else if (!up) enemy.increasePosition(0,-1f * DisplayManager.getFrameTimeSeconds(),0);
 	    
 	    //update every frame
 	    for (Entity entity:entities){
 		entity.increaseRotation(0, .15f, 0f);	    
-		//entity.increasePosition(0f, 0f, -.0025f);		
+		entity.increasePosition(0f, 0f, -.0025f);		
 	    }
 	  	    
   
 	    //render
 	    camera.move();
 	    player.move();
+	    //player.increaseRotation(0f,.1f,0);
 	    renderer.processEntity(player);
 	    renderer.processEntity(enemy);
-	    renderer.processEntity(fern);
+	    //renderer.processEntity(fern);
 	    
 	    for (Entity entity:entities){
 		//if (entity.getPosition().z <= Renderer.getFar() && entity.getPosition().z >= Renderer.getNear()){
-		renderer.processEntity(entity);
+		//renderer.processEntity(entity);
+		//entity.increasePosition(0,.05f,0);
 	    }
 	    renderer.processTerrain(terrain);
 	    renderer.processTerrain(terrain2); 

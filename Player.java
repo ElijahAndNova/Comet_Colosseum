@@ -11,7 +11,7 @@ public class Player extends Entity{
     private static final float RUN_SPEED = 20;
     private static final float TURN_SPEED = 160;
 
-    private static final float GRAVITY = -50;
+    private static final float GRAVITY = -5;
     private static final float JUMP_POWER = 10;
 
     private static final float PLAYER_START_X = 0;
@@ -56,6 +56,7 @@ public class Player extends Entity{
 	super(model, position, rotX, rotY, rotZ, scale);
 	this.position = position;
 	resetRotation();
+	jump();
     }
 
     public void setEnemy(Enemy enemy){
@@ -82,7 +83,8 @@ public class Player extends Entity{
 	    upwardsSpeed = 0;
 	    super.getPosition().y = TERRAIN_HEIGHT;
 	}
-	System.out.println(moving);
+	jump();
+	//System.out.println(moving);
 	moveDirection();
 	resetRotation();
     }
@@ -202,13 +204,13 @@ public class Player extends Entity{
 	//float theta = (float) Math.toDegrees(Math.asin(dz / distance))-90;
 	//float theta = Vector3f.angle(new Vector3f(super.getRotX(), super.getRotY(), super.getRotZ()), new Vector3f(0,180,0));
 	//Vector3f normalizedPlayerVector = new Vector3f();
-        System.out.println("Y rotation = " + super.getRotY());
+        //System.out.println("Y rotation = " + super.getRotY());
 	
 	//playerFacing.normalise(playerFacing);
         playerFacing.x = (float) ((360/super.getRotX())*.08333);
         playerFacing.y = (float) ((360/super.getRotY())*.08333);
 	playerFacing.z = (float) ((360/super.getRotZ())*.08333);
-	System.out.println("playerFacing.x = " + playerFacing.x + "playerFacing.y = " + playerFacing.y + " playerFacing.z = " + playerFacing.z);
+	//System.out.println("playerFacing.x = " + playerFacing.x + "playerFacing.y = " + playerFacing.y + " playerFacing.z = " + playerFacing.z);
 	float playerVectorLength = (float) (Math.sqrt(playerFacing.x*playerFacing.x + playerFacing.y*playerFacing.y + playerFacing.z*playerFacing.z));
 	float enemyVectorLength = (float) (Math.sqrt(enemyFacing.x*enemyFacing.x + enemyFacing.y*enemyFacing.y + enemyFacing.z*enemyFacing.z));
 	float theta = (float) Math.toDegrees(Math.acos(Vector3f.dot(playerFacing,enemyFacing)/(playerVectorLength*enemyVectorLength)));
@@ -216,7 +218,7 @@ public class Player extends Entity{
 	startRotation = super.getRotY();
 	endRotation = super.getRotY() + theta;
 	//super.increaseRotation(0,theta,0);
-	System.out.println("Theta = " + theta);
+	//System.out.println("Theta = " + theta);
     }
     
     private void setDestination(float radius){
@@ -242,14 +244,14 @@ public class Player extends Entity{
 	float theta1 = 0;
 	//	float distance = (float) Math.sqrt(radius*radius + radius*radius - (2*radius*radius*Math.cos(Math.toRadians(30)))); //Hypotenuse of leg triangle
 	float distance = lawOfCosines(radius);
-	System.out.println("Hypotenuse is = " + distance);
-	System.out.println("Currently in quadrant " + QUADRANT);
+	//System.out.println("Hypotenuse is = " + distance);
+	//System.out.println("Currently in quadrant " + QUADRANT);
 	if (QUADRANT == 1) theta1 = 180 - 75f - rotation_to_x_axis;
 	else if (QUADRANT == 2) theta1 = 180 - 75f - rotation_to_z_axis;
         else if (QUADRANT == 3) theta1 = 180 - 75f - (180-Math.abs(rotation_to_x_axis));	
 	else if (QUADRANT == 4) theta1 = 180 - 75f - (180-Math.abs(rotation_to_z_axis));
 	float theta2 = 180 - 90 - theta1;
-	System.out.println("Theta1 = " + theta1 + "  Theta2 = " + theta2);
+	//System.out.println("Theta1 = " + theta1 + "  Theta2 = " + theta2);
 	float xLeg = (float) Math.abs(distance * Math.cos((theta1))); //X coordinate destination
 	float zLeg = (float) Math.abs(distance * Math.cos((theta2))); //Z coordinate destination
 	if (QUADRANT == 1){ 
@@ -268,10 +270,10 @@ public class Player extends Entity{
             AX = xLeg;
             AZ = zLeg;
 	}
-	System.out.println("Moving " + AX + " in x direction and " + AZ + " in z direction");
+	//System.out.println("Moving " + AX + " in x direction and " + AZ + " in z direction");
 	//System.out.println("Starting position is (" + startX + "," + startZ + ")  |  xLeg is " + xLeg + "  |  zLeg is " + zLeg + "  |  Distances to these destinations are (" + AX + "," + AZ + ")");
 	//System.out.println("AX,AZ = " + AX + "," + AZ);
-	System.out.println();
+	//System.out.println();
     }
     
     /*public void checkInputs(){
@@ -286,7 +288,7 @@ public class Player extends Entity{
 		if (Keyboard.getEventKeyState() && onGround == true) {
 		    setDestination(calculateDistanceToEnemy());
 		    //calculateAngleToEnemy();
-		    System.out.println(getAngle());
+		    //System.out.println(getAngle());
 		    onGround = false;
 		    jump();
 		    float distance = 10f;
@@ -353,7 +355,7 @@ public class Player extends Entity{
                 
 		
 	    if (Keyboard.getEventKeyState() && onGround == true) {
-		    System.out.println(lawOfCosines(35));
+		//System.out.println(lawOfCosines(35));
                     //angle = calculateAngleToEnemy();
                     //float xoffset = (float) Math.cos(angle) * calculateDistanceToEnemy();
                     //float zoffset = (float) Math.sin(angle) * calculateDistanceToEnemy();

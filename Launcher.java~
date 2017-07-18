@@ -22,8 +22,10 @@ class Launcher{
 
     
     public static void main(String args[]){
+	new Colosseum();
+	/*
 	assembleGUI(screen_width);
-	frame.getContentPane().setBackground(new Color(r,g,b));
+	frame.getContentPane().setBackground(new Color(0,0,0));
 	//changeGUIBackground(.0001f);
 
 	JLabel astronaut = new JLabel();
@@ -42,7 +44,8 @@ class Launcher{
 	/*while (true){
 	    changeGUIBackground(.000001f);
 	    frame.repaint();
-	}*/
+	*/
+	}
     }
 
     public static void showFrame(){
@@ -65,7 +68,7 @@ class Launcher{
 	if (b >= .5) b_mode = false;
 	else if(b <= 001) b_mode= true;
 	frame.getContentPane().setBackground(new Color(r,g,b));
-	System.out.println("R = " + r + "G = " +  g +"B = " + b);
+	//System.out.println("R = " + r + "G = " +  g +"B = " + b);
     }
 
     public static void assembleGUI(int screen_width){	
@@ -168,5 +171,3 @@ class Launcher{
             });
         frame.getContentPane().add(login);
     }
-
-}
